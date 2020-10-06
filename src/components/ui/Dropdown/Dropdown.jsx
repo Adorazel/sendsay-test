@@ -52,7 +52,7 @@ export default class Dropdown extends Component {
   }
 
   close = event => {
-    if (event.keyCode === 27 || event.type === "click") {
+    if (event.key === "Escape" || event.type === "click") {
       this.setState(state => ({
         ...state,
         isOpened: false,

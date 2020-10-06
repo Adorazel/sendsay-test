@@ -1,14 +1,13 @@
 @import "./_vars.css";
 @import "./_reset.css";
-@import "./_grid.css";
+/*@import "./_grid.css";*/
 @import "./_animations.css";
 
-@import "./_type.css";
-@import "./_buttons.css";
-@import "./_alert.css";
-@import "./_dropdown.css";
-@import "./_forms.css";
+/*@import "./_type.css";*/
 
 
-@import "./components/_login.css";
+
+
+
+
 @import "./components/_history.css";

@@ -1,5 +1,5 @@
 import React, {Component} from "react"
-import {ErrorIndicator} from "./ui"
+import {Alert} from "./ui"
 
 export default class ErrorBoundary extends Component {
 
@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component {
   render() {
     const {hasError, error, errorInfo} = this.state
     if (hasError) return <div className="container"><div className="p-5">
-      <ErrorIndicator error={{message: error, description: errorInfo}}/>
+      <Alert error={{message: error, description: errorInfo}}/>
     </div></div>
     return this.props.children
   }

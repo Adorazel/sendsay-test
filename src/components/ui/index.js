@@ -1,9 +1,9 @@
 import Button from "./Button"
-import ErrorIndicator from "./ErrorIndicator"
-import Dropdown from "./Dropdown/Dropdown"
+import Alert from "./Alert"
+import Dropdown from "./Dropdown"
 
 export {
   Button,
-  ErrorIndicator,
+  Alert,
   Dropdown
 }

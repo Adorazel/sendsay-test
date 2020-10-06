@@ -67,17 +67,17 @@
     display: none;
 }
 
-.btn.loading {
+.btn.btn--loading {
     color: transparent;
     pointer-events: none;
     position: relative;
 }
 
-.btn.loading::before {
+.btn.btn--loading::before {
     display: none;
 }
 
-.btn.loading::after {
+.btn.btn--loading::after {
     content: var(--loader);
     display: block;
     width: 1.5rem;
@@ -91,14 +91,12 @@
 }
 
 
-
-
-.btn-primary {
+.btn--primary {
     background: linear-gradient(to top, var(--blue), var(--light-blue));
     color: white;
 }
 
-.btn-primary:focus::before,
-.btn-primary.focus::before {
+.btn--primary:focus::before,
+.btn--primary.focus::before {
     box-shadow: 0 0 0 2px rgba(69, 166, 255, .5);
 }
