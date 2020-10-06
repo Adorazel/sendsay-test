@@ -1,0 +1,17 @@
+.request-dot {
+    display: inline-block;
+    margin-right: .3125rem;
+    width: .625rem;
+    height: .625rem;
+    border-radius: 50%;
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.request-dot-success {
+    background: var(--success);
+}
+
+.request-dot-danger {
+    background: var(--danger);
+}
