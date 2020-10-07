@@ -2,7 +2,7 @@ import React from "react"
 import {Button, Alert} from "../ui"
 import logo from "../../img/logo.png"
 import logo_2x from "../../img/logo@2x.png"
-
+import {Copyright} from "../"
 
 const Login = props => {
 
@@ -35,6 +35,7 @@ const Login = props => {
       </div>
       <Button onClick={loginHandler} loading={isLoading} disabled={!isFormValid}>Войти</Button>
     </div>
+    <Copyright/>
   </div>
 }
 

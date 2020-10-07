@@ -1,8 +1,9 @@
-import {setAuth, signIn, logout, setError} from "./auth.action"
+import {setAuth, signIn, logout, setError, setUser} from "./auth.action"
 
 export {
   setAuth,
   signIn,
   logout,
-  setError
+  setError,
+  setUser
 }

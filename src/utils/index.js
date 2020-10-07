@@ -1,6 +1,7 @@
 import autosort from "array-autosort"
 import compose from "./compose"
 
+
 // const sorter = (a, b) => a.timestamp === b.timestamp ? 0 : a.timestamp < b.timestamp ? -1 : 1
 // const actual = autosort([
 //   { timestamp:1 },
@@ -11,5 +12,5 @@ import compose from "./compose"
 
 export {
   autosort,
-  compose
+  compose,
 }

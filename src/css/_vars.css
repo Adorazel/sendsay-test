@@ -1,21 +1,21 @@
 :root {
     --red: #cf2c00; /* #f44336 */
-    --pink: #e91e63;
-    --purple: #9c27b0;
-    --deep-purple: #673ab7;
-    --indigo: #3f51b5;
+    /*--pink: #e91e63;*/
+    /*--purple: #9c27b0;*/
+    /*--deep-purple: #673ab7;*/
+    /*--indigo: #3f51b5;*/
     --blue: #0055fb;  /* #2196f3 */
     --light-blue: #45a6ff; /* #03a9f4 */
-    --cyan: #00bcd4;
-    --teal: #009688;
+    /*--cyan: #00bcd4;*/
+    /*--teal: #009688;*/
     --green: #30b800; /* #4caf50 */
-    --light-green: #8bc34a;
-    --lime: #cddc39;
-    --yellow: #ffeb3b;
-    --amber: #ffc107;
-    --orange: #ff9800;
-    --deep-orange: #ff5722;
-    --brown: #795548;
+    /*--light-green: #8bc34a;*/
+    /*--lime: #cddc39;*/
+    /*--yellow: #ffeb3b;*/
+    /*--amber: #ffc107;*/
+    /*--orange: #ff9800;*/
+    /*--deep-orange: #ff5722;*/
+    /*--brown: #795548;*/
     --gray-light: #f6f6f6;
     --gray: #999999;
     --gray-dark: #424242;
@@ -24,19 +24,19 @@
     --black: #0d0d0d;
 
     --primary: var(--blue);
-    --secondary: var(--gray);
+    /*--secondary: var(--gray);*/
     --success: var(--green);
-    --info: var(--cyan);
-    --warning: var(--yellow);
+    /*--info: var(--cyan);*/
+    /*--warning: var(--yellow);*/
     --danger: var(--red);
-    --light: var(--gray-light);
-    --dark: var(--gray-dark);
+    /*--light: var(--gray-light);*/
+    /*--dark: var(--gray-dark);*/
 
-    --breakpoint-xs: 0;
-    --breakpoint-sm: 576px;
-    --breakpoint-md: 768px;
-    --breakpoint-lg: 992px;
-    --breakpoint-xl: 1200px;
+    /*--breakpoint-xs: 0;*/
+    /*--breakpoint-sm: 576px;*/
+    /*--breakpoint-md: 768px;*/
+    /*--breakpoint-lg: 992px;*/
+    /*--breakpoint-xl: 1200px;*/
 
     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     --font-family-monospace: source-code-pro, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;

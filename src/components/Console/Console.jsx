@@ -1,27 +1,64 @@
-import React from "react"
-import {Button, Dropdown} from "../ui"
+import React, {useRef, useState, useEffect} from "react"
 
 const Console = props => {
 
-  const {logoutHandler, isLoading} = props
+  const [dividerPosition, setDividerPosition] = useState(.5)
+  const divider = useRef()
 
-  return <div className="console">
-    <Button onClick={logoutHandler} loading={isLoading}>Выйти</Button>
-    <br/>
-    <br/>
-    <Dropdown className="ml-5">
-      <Dropdown.Toggle>
-        <span className="request-dot request-dot-success"/>
-        pong
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item onClick={() => console.log("Выполнить")}>Выполнить</Dropdown.Item>
-        <Dropdown.Item onClick={() => console.log("Скопировать")}>Скопировать</Dropdown.Item>
-        <div className="dropdown-divider"/>
-        <Dropdown.Item variant="danger" onClick={() => console.log("Удалить")}>Удалить</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-  </div>
+  const setPosition = percentage => {
+    percentage = Math.min(.8, percentage)
+    percentage = Math.max(.2, percentage)
+    setDividerPosition(percentage)
+  }
+
+  const onMouseDown = () => {
+    window.addEventListener("mousemove", onMouseMove)
+    window.addEventListener("mouseup", onMouseUp)
+  }
+
+  const onMouseMove = event => {
+    setPosition(event.clientX / window.innerWidth)
+  }
+
+  const onMouseUp = () => {
+    window.removeEventListener("mousemove", onMouseMove)
+    window.removeEventListener("mouseup", onMouseUp)
+  }
+
+  const onTouchStart = () => {
+    window.addEventListener("touchmove", onTouchMove)
+    window.addEventListener("touchend", onTouchEnd)
+  }
+
+  const onTouchMove = event => {
+    setPosition(event.touches[0].clientX / window.innerWidth)
+  }
+
+  const onTouchEnd = () => {
+    window.removeEventListener("touchmove", onTouchMove)
+    window.removeEventListener("touchend", onTouchEnd)
+  }
+
+  useEffect(() => {
+    const initialPosition = localStorage.getItem("SENDSAY_DIVIDER_POSITION") || ".5"
+    setDividerPosition(parseFloat(initialPosition))
+  }, [])
+
+  useEffect(() => {
+    if (dividerPosition !== .5) localStorage.setItem("SENDSAY_DIVIDER_POSITION", "" + dividerPosition)
+  }, [dividerPosition])
+
+  return <section className="console">
+    <div className="console__left" style={{width: `${100 * dividerPosition}%`}}>
+      <label htmlFor="request">Запрос:</label>
+      <textarea name="request" id="request" className="console__field"/>
+    </div>
+    <div ref={divider} onMouseDown={onMouseDown} onTouchStart={onTouchStart} className="console__divider"/>
+    <div className="console__right" style={{width: `${100 * (1 - dividerPosition)}%`}}>
+      <label htmlFor="response">Ответ:</label>
+      <textarea name="response" id="response" className="console__field"/>
+    </div>
+  </section>
 }
 
 export default Console

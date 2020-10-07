@@ -10,7 +10,7 @@ import {compose} from "../utils"
 const App = ({sendsayService, isAuth, setAuth}) => {
 
   useEffect(() => {
-    sendsayService.setSessionFromCookie()
+    sendsayService.setSessionFromCookie("sendsay_session")
     const isAuth = sendsayService.getUsername() !== "unauthorized"
     setAuth(isAuth)
   }, [sendsayService, setAuth])

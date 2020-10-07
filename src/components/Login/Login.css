@@ -22,6 +22,7 @@
     border-radius: 5px;
     background: white;
     padding: 2.5rem 1.875rem;
+    margin-bottom: 1.25rem;
 }
 
 .login__form-title {
@@ -49,21 +50,8 @@
     transition: border .25s, box-shadow .25s;
 }
 
-/* Unstyle the caret on `<select>`s in IE10+. */
-.login__form-control::-ms-expand {
-    background-color: transparent;
-    border: 0;
-}
-
-/* // Remove select outline from select box in FF */
-.login__form-control:-moz-focusring {
-    color: transparent;
-    text-shadow: 0 0 0 var(--black);
-}
-
 .login__form-control::placeholder {
     color: var(--gray);
-    /* Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526. */
     opacity: 1;
 }
 
@@ -76,10 +64,8 @@
     box-shadow: 0 0 0 2px rgba(0, 0, 0, .2);
 }
 
-.login__form-control:disabled,
-.login__form-control[readonly] {
+.login__form-control:disabled {
     background-color: var(--gray-light);
-    /* iOS fix for unreadable disabled content; see https://github.com/twbs/bootstrap/issues/11655. */
     opacity: 1;
 }
 
@@ -115,6 +101,19 @@
 
 .login__form-group.login__form-group--error label {
     color: var(--danger);
+}
+
+a:not(.btn).login__github-link {
+    color: var(--gray);
+    display: inline-block;
+    border-bottom: 1px solid transparent;
+    transition: border .25s, filter .25s, color .25s;
+}
+
+a:not(.btn).login__github-link:hover {
+    color: var(--blue);
+    text-decoration: none;
+    border-color: currentColor;
 }
 
 

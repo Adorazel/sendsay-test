@@ -48,11 +48,12 @@ export default class Dropdown extends Component {
       this.setPosition()
       document.addEventListener("click", this.close)
       document.addEventListener("keydown", this.close)
+      document.addEventListener("closeAllDropdowns", this.close)
     })
   }
 
   close = event => {
-    if (event.key === "Escape" || event.type === "click") {
+    if (event.key === "Escape" || event.type === "click" || event.type === "closeAllDropdowns") {
       this.setState(state => ({
         ...state,
         isOpened: false,
@@ -60,6 +61,7 @@ export default class Dropdown extends Component {
         this.setPosition()
         document.removeEventListener("click", this.close)
         document.removeEventListener("keydown", this.close)
+        document.removeEventListener("closeAllDropdowns", this.close)
       })
     }
   }

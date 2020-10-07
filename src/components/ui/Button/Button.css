@@ -43,13 +43,13 @@
     text-decoration: none;
 }
 
-.btn:not(.btn-toggle):hover::before,
-.btn:not(.btn-toggle).hover::before {
+.btn:not(.btn-toggle):not(.btn--simple):hover::before,
+.btn:not(.btn-toggle):not(.btn--simple).hover::before {
     background: rgba(255, 255, 255, .15);
 }
 
-.btn:not(.btn-toggle):active::before,
-.btn:not(.btn-toggle).active::before {
+.btn:not(.btn-toggle):not(.btn--simple):active::before,
+.btn:not(.btn-toggle):not(.btn--simple).active::before {
     background: rgba(0, 0, 0, .15);
     transition: background 0s;
 }
@@ -98,5 +98,47 @@
 
 .btn--primary:focus::before,
 .btn--primary.focus::before {
+    box-shadow: 0 0 0 2px rgba(69, 166, 255, .5);
+}
+
+.btn--simple {
+    transition: color .25s;
+    padding: .25rem;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.btn--simple .icon {
+    display: inline-block;
+    pointer-events: none;
+    fill: currentColor;
+    transition: fill .25s;
+}
+
+.btn--simple .text {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.btn--simple .text + .icon {
+    margin-left: .625rem;
+}
+
+.btn--simple .icon + .text {
+    margin-left: .625rem;
+}
+
+.btn--simple:hover,
+.btn--simple.hover {
+    color: var(--primary)
+}
+
+.btn--simple:focus,
+.btn--simple.focus {
+    color: var(--primary);
+}
+
+.btn--simple:focus::before,
+.btn--simple.focus::before {
     box-shadow: 0 0 0 2px rgba(69, 166, 255, .5);
 }
