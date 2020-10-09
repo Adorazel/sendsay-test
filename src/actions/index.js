@@ -2,6 +2,7 @@ import {setAuth, signIn, logout, setAuthError, setUser} from "./auth.action"
 import {setRequestBody, setRequestError} from "./request.action"
 import {setResponseBody, setResponseError} from "./response.action"
 import {send} from "./fetch.action"
+import {addHistoryItem, deleteHistoryItem, purgeHistory} from "./history.action"
 
 export {
   setAuth,
@@ -17,4 +18,8 @@ export {
   setResponseError,
 
   send,
+
+  addHistoryItem,
+  deleteHistoryItem,
+  purgeHistory
 }

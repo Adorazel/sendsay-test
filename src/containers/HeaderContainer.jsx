@@ -41,6 +41,8 @@ class HeaderContainer extends Component {
   }
 
   componentDidMount() {
+    /* При разработке я столкнулся с тем, что метод getUsername возвращает не то значение, что я ожидал получить.
+       Поэтому я решил сохранять пользователя в localStorage */
     try {
       const user = localStorage.getItem("SENDSAY_USER")
       if (user) {

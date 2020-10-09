@@ -25,7 +25,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         login,
-        sublogin
+        sublogin,
       }
 
     case SET_AUTH_LOADING:
@@ -37,13 +37,17 @@ const authReducer = (state = initialState, action) => {
     case SET_AUTH_STATUS:
       return {
         ...state,
-        isAuth: action.payload
+        isAuth: action.payload,
+        error: null,
+        isLoading: false
       }
 
     case SET_AUTH_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
+        isAuth: false,
+        isLoading: false
       }
 
     default:

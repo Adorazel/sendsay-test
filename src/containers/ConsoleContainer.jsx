@@ -1,10 +1,8 @@
 import React, {Component} from "react"
 import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
-import {compose} from "../utils"
-import {withSendsay} from "../hoc"
-import {send, setRequestBody, setRequestError, setResponseBody} from "../actions"
-import {Console, Footer} from "../components"
+import {setRequestBody, setResponseBody} from "../actions"
+import {Console} from "../components"
 
 
 class ConsoleContainer extends Component {
@@ -14,56 +12,11 @@ class ConsoleContainer extends Component {
     setRequestBody(event.target.value)
   }
 
-  doFormat = () => {
-    const {request, setRequestBody, setRequestError} = this.props
-    try {
-      let value = JSON.parse(request.value)
-      value = JSON.stringify(value, null, 2)
-      setRequestBody(value)
-      return true
-    } catch (e) {
-      setRequestError()
-    }
-    return false
-  }
-
-  doSend = () => {
-    const {send, request, setResponseBody} = this.props
-    setResponseBody("")
-    if (this.doFormat()) {
-      const body = JSON.parse(request.value)
-      send({body})
-    }
-  }
-
-  keydownListener = event => {
-    if (event.key === "Enter") {
-      event.preventDefault()
-      this.doSend()
-    }
-    if (event.key === "f" && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
-      event.preventDefault()
-      this.doFormat()
-    }
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.keydownListener)
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener("keydown", this.keydownListener)
-  }
-
   render() {
-    const {changeHandler, doSend, doFormat} = this
+    const {changeHandler} = this
     const {request, response, isLoading} = this.props
     const consoleProps = {request, response, changeHandler, isLoading}
-    const footerProps = {doSend, doFormat, isLoading}
-    return <>
-      <Console {...consoleProps}/>
-      <Footer {...footerProps}/>
-    </>
+    return <Console {...consoleProps}/>
   }
 }
 
@@ -78,15 +31,6 @@ const mapStateToProps =
     isLoading
   })
 
-const mapDispatchToProps = (dispatch, {sendsayService}) => bindActionCreators({
-  setRequestBody,
-  setRequestError,
-  setResponseBody,
-  send: send(sendsayService),
+const mapDispatchToProps = dispatch => bindActionCreators({setRequestBody, setResponseBody}, dispatch)
 
-}, dispatch)
-
-export default compose(
-  withSendsay(),
-  connect(mapStateToProps, mapDispatchToProps)
-)(ConsoleContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ConsoleContainer)
