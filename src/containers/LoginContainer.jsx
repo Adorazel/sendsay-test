@@ -1,7 +1,7 @@
 import React, {Component} from "react"
 import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
-import {setError, signIn} from "../actions"
+import {setAuthError, signIn} from "../actions"
 import {compose} from "../utils"
 import {withSendsay} from "../hoc"
 import {Login} from "../components"
@@ -21,8 +21,8 @@ class LoginContainer extends Component {
   }
 
   clearError = () => {
-    const {setError} = this.props
-    setError(null)
+    const {setAuthError} = this.props
+    setAuthError(null)
   }
 
   changeHandler = event => {
@@ -110,7 +110,7 @@ const mapStateToProps = ({auth: {error, isLoading}}) => ({error, isLoading})
 
 const mapDispatchToProps = (dispatch, {sendsayService}) => bindActionCreators({
   signIn: signIn(sendsayService),
-  setError
+  setAuthError
 }, dispatch)
 
 export default compose(

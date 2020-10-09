@@ -54,8 +54,8 @@
     transition: background 0s;
 }
 
-.btn:disabled,
-.btn.disabled {
+.btn:not(.btn--simple):disabled,
+.btn:not(.btn--simple).disabled {
     background: var(--disabled);
     color: white;
     box-shadow: none;
@@ -141,4 +141,10 @@
 .btn--simple:focus::before,
 .btn--simple.focus::before {
     box-shadow: 0 0 0 2px rgba(69, 166, 255, .5);
+}
+
+.btn--simple:disabled,
+.btn--simple.disabled {
+    color: var(--disabled);
+    pointer-events: none;
 }

@@ -2,41 +2,32 @@ import React, {useRef, useState, useEffect} from "react"
 
 const Console = props => {
 
+  const {request, response, changeHandler, isLoading} = props
+
   const [dividerPosition, setDividerPosition] = useState(.5)
   const divider = useRef()
+  const area = useRef()
 
-  const setPosition = percentage => {
-    percentage = Math.min(.8, percentage)
-    percentage = Math.max(.2, percentage)
-    setDividerPosition(percentage)
+  const startHandler = () => {
+    area.current.addEventListener("mousemove", moveListener)
+    area.current.addEventListener("mouseup", endListener)
+    area.current.addEventListener("touchmove", moveListener)
+    area.current.addEventListener("touchend", endListener)
   }
 
-  const onMouseDown = () => {
-    window.addEventListener("mousemove", onMouseMove)
-    window.addEventListener("mouseup", onMouseUp)
+  const moveListener = event => {
+    let value = event.clientX || event.touches[0].clientX
+    value = value / window.innerWidth
+    value = Math.min(.8, value)
+    value = Math.max(.2, value)
+    setDividerPosition(value)
   }
 
-  const onMouseMove = event => {
-    setPosition(event.clientX / window.innerWidth)
-  }
-
-  const onMouseUp = () => {
-    window.removeEventListener("mousemove", onMouseMove)
-    window.removeEventListener("mouseup", onMouseUp)
-  }
-
-  const onTouchStart = () => {
-    window.addEventListener("touchmove", onTouchMove)
-    window.addEventListener("touchend", onTouchEnd)
-  }
-
-  const onTouchMove = event => {
-    setPosition(event.touches[0].clientX / window.innerWidth)
-  }
-
-  const onTouchEnd = () => {
-    window.removeEventListener("touchmove", onTouchMove)
-    window.removeEventListener("touchend", onTouchEnd)
+  const endListener = () => {
+    area.current.removeEventListener("mousemove", moveListener)
+    area.current.removeEventListener("mouseup", endListener)
+    area.current.removeEventListener("touchmove", moveListener)
+    area.current.removeEventListener("touchend", endListener)
   }
 
   useEffect(() => {
@@ -49,14 +40,19 @@ const Console = props => {
   }, [dividerPosition])
 
   return <section className="console">
-    <div className="console__left" style={{width: `${100 * dividerPosition}%`}}>
-      <label htmlFor="request">Запрос:</label>
-      <textarea name="request" id="request" className="console__field"/>
-    </div>
-    <div ref={divider} onMouseDown={onMouseDown} onTouchStart={onTouchStart} className="console__divider"/>
-    <div className="console__right" style={{width: `${100 * (1 - dividerPosition)}%`}}>
-      <label htmlFor="response">Ответ:</label>
-      <textarea name="response" id="response" className="console__field"/>
+    <div ref={area} className="console__draggable-area">
+      <div className={`console__column${request.isValid ? "" : " console__column--error"}`}
+           style={{width: `${100 * dividerPosition}%`}}>
+        <label htmlFor="request">Запрос:</label>
+        <textarea name="request" id="request" className="console__field"
+                  value={request.value} onChange={changeHandler} disabled={isLoading}/>
+      </div>
+      <div ref={divider} onMouseDown={startHandler} onTouchStart={startHandler} className="console__divider"/>
+      <div className={`console__column${response.isValid ? "" : " console__column--error"}`}
+           style={{width: `${100 * (1 - dividerPosition)}%`}}>
+        <label htmlFor="response">Ответ:</label>
+        <textarea name="response" id="response" className="console__field" readOnly value={response.value}/>
+      </div>
     </div>
   </section>
 }

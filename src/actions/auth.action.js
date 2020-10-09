@@ -14,7 +14,7 @@ const setAuth = auth => {
   }
 }
 
-const setError = error => {
+const setAuthError = error => {
   return {
     type: SET_AUTH_ERROR,
     payload: error
@@ -37,11 +37,11 @@ const signIn = sendsay => ({login, sublogin, password}) => dispatch => {
       document.cookie = `sendsay_session=${sendsay.session}; max-age=3600`
       dispatch(setUser({login, sublogin}))
       dispatch(setAuth(true))
-      dispatch(setError(null))
+      dispatch(setAuthError(null))
       dispatch(setLoading(false))
     })
     .catch(error => {
-      dispatch(setError(error))
+      dispatch(setAuthError(error))
       dispatch(setLoading(false))
     })
 }
@@ -55,11 +55,11 @@ const logout = sendsay => () => dispatch => {
       document.cookie = `sendsay_session=; max-age=-1`
       dispatch(setUser({login: null, sublogin: null}))
       dispatch(setAuth(false))
-      dispatch(setError(null))
+      dispatch(setAuthError(null))
       dispatch(setLoading(false))
     })
     .catch(error => {
-      dispatch(setError(error))
+      dispatch(setAuthError(error))
       dispatch(setLoading(false))
     })
 }
@@ -69,6 +69,6 @@ export {
   setAuth,
   signIn,
   logout,
-  setError,
+  setAuthError,
   setUser
 }

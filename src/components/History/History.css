@@ -52,6 +52,10 @@
 
 }
 
+.history__trash .btn .icon {
+    display: block;
+}
+
 .history__scroll-content {
     display: flex;
     padding: var(--padding) .9375rem;
