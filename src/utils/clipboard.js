@@ -21,13 +21,13 @@ const fallbackCopyTextToClipboard = text => {
 
 const copyToClipboard = text => {
   if (!navigator.clipboard) return fallbackCopyTextToClipboard(text)
-  navigator.clipboard.writeText(text).then(() => {
+  return navigator.clipboard.writeText(text).then(() => {
     process.env.NODE_ENV === "development" && console.log("Скопировано")
     return true
   }, error => {
     process.env.NODE_ENV === "development" && console.log(error)
+    return false
   })
-  return false
 }
 
 export default copyToClipboard

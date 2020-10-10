@@ -65,4 +65,38 @@
 
 .history__item {
     margin-right: .625rem;
+    position: relative;
+}
+
+.history__item .btn-toggle:first-child {
+    z-index: 2;
+}
+
+.history__item-copied {
+    display: none;
+}
+
+.history__item-copied-enter {
+    display: block;
+    position: absolute;
+    top: .25rem;
+    left: .25rem;
+    right: -1.5rem;
+    background: var(--gray-light);
+    padding: .25rem .125rem .375rem;
+    font-size: .75rem;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    border-radius: 5px;
+    transition: opacity .5s, margin .5s;
+    will-change: opacity, margin;
+}
+
+.history__item-copied-enter-active {
+    opacity: 0;
+    margin-top: -20px;
+}
+
+.history__item-copied-enter-done {
+    display: none;
 }

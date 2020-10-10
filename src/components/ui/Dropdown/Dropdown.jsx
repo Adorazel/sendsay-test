@@ -13,9 +13,11 @@ export default class Dropdown extends Component {
   constructor(props) {
     super(props)
 
+    this.container = props.container
+    this.trigger = React.createRef()
+    this.menu = React.createRef()
+
     this.state = {
-      trigger: React.createRef(),
-      menu: React.createRef(),
       isOpened: false,
       position: {x: "", y: ""}
     }
@@ -26,12 +28,19 @@ export default class Dropdown extends Component {
       let x, y
       x = y = ""
       if (state.isOpened) {
-        const $menu = state.menu.current
-        const $trigger = state.trigger.current
-        const {right, bottom} = $trigger.getBoundingClientRect()
+
+        const $menu = this.menu.current
+        const $trigger = this.trigger.current
+        const {left, right, bottom} = $trigger.getBoundingClientRect()
         $menu.style.minWidth = $trigger.offsetWidth + "px"
         x = right - $menu.offsetWidth
         y = bottom + 1
+        if (this.container) {
+          const {left: l, right: r} = this.container.getBoundingClientRect()
+          x = Math.min(right, r) - $menu.offsetWidth
+          if (x < l + 15) x = left
+          x = Math.max(x, l)
+        }
       }
       return {
         ...state,
@@ -79,8 +88,7 @@ export default class Dropdown extends Component {
   render() {
 
     const {className, children, ...otherProps} = this.props
-    const {trigger, menu} = this.state
-    const {state, toggle} = this
+    const {state, toggle, trigger, menu} = this
 
     return <div
       className={`dropdown${className ? ` ${className}` : ""}`} {...otherProps}>

@@ -1,11 +1,13 @@
 import React, {useRef} from "react"
+import {CSSTransition} from "react-transition-group"
 import {Button, Dropdown} from "../ui"
 
 const History = props => {
 
-  const {historyItems, doItem, copyItem, deleteItem, cleanHistory} = props
+  const {historyItems, doItem, copyItem, deleteItem, cleanHistory, copiedId} = props
 
   const historyRow = useRef()
+  const historyScroll = useRef()
 
   const doScroll = event => {
     document.dispatchEvent(new Event("closeAllDropdowns"))
@@ -26,22 +28,26 @@ const History = props => {
   }
 
   return <div className="history">
-    <div className="history__scroll--horizontal" onTouchStart={doTouchStart} onWheel={doScroll.bind(this)}>
+    <div ref={historyScroll} className="history__scroll--horizontal" onTouchStart={doTouchStart} onWheel={doScroll.bind(this)}>
       <div ref={historyRow} className="history__scroll-content">
         {historyItems.map(item => <div key={item.id} className="history__item">
-          <Dropdown className="ml-5">
-            <Dropdown.Toggle>
-              <span className={`request-dot request-dot-${item.isError ? "danger" : "success"}`}/>
-              {item.query["action"]}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              <Dropdown.Item onClick={() => doItem(item.id)}>Выполнить</Dropdown.Item>
-              <Dropdown.Item onClick={() => copyItem(item.id)}>Скопировать</Dropdown.Item>
-              <div className="dropdown-divider"/>
-              <Dropdown.Item variant="danger" onClick={() => deleteItem(item.id)}>Удалить</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
+            <Dropdown className="ml-5" container={historyScroll.current}>
+              <Dropdown.Toggle>
+                <span className={`request-dot request-dot-${item.isError ? "danger" : "success"}`}/>
+                {item.query["action"]}
+                <CSSTransition in={copiedId === item.id} timeout={500} classNames="history__item-copied"
+                               mountOnEnter unmountOnExit>
+                  <span className="history__item-copied">Скопировано</span>
+                </CSSTransition>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={() => doItem(item.id)}>Выполнить</Dropdown.Item>
+                <Dropdown.Item onClick={() => copyItem(item.id)}>Скопировать</Dropdown.Item>
+                <div className="dropdown-divider"/>
+                <Dropdown.Item variant="danger" onClick={() => deleteItem(item.id)}>Удалить</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
         )}
       </div>
     </div>

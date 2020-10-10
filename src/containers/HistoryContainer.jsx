@@ -9,6 +9,14 @@ import {History} from "../components"
 
 class HistoryContainer extends Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      copiedId: null
+    }
+  }
+
   doItem = id => {
     const {send, historyItems, setRequestBody, setResponseBody} = this.props
     const {query} = historyItems.find(item => item.id === id)
@@ -20,11 +28,14 @@ class HistoryContainer extends Component {
   }
 
   copyItem = id => {
-    const {historyItems} = this.props
-    const {query} = historyItems.find(item => item.id === id)
-    if (query && copyToClipboard(JSON.stringify(query, null, 2))) {
+    this.setState({copiedId: null}, () => {
+      const {historyItems} = this.props
+      const {query} = historyItems.find(item => item.id === id)
+      if (query && copyToClipboard(JSON.stringify(query, null, 2))) {
+        this.setState({copiedId: id})
+      }
+    })
 
-    }
   }
 
   deleteItem = id => {
@@ -41,7 +52,8 @@ class HistoryContainer extends Component {
   render() {
     const {doItem, copyItem, deleteItem, cleanHistory} = this
     const {historyItems} = this.props
-    const historyProps = {historyItems, doItem, copyItem, deleteItem, cleanHistory}
+    const {copiedId} = this.state
+    const historyProps = {historyItems, doItem, copyItem, deleteItem, cleanHistory, copiedId}
     return <History {...historyProps}/>
   }
 }

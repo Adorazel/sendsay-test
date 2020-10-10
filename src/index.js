@@ -8,6 +8,7 @@ import {Sendsay} from "./services"
 import * as serviceWorker from "./serviceWorker"
 import store from "./store"
 import "./css/index.css"
+import "./utils"
 
 
 const sendsay = new Sendsay()
