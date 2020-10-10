@@ -4,4 +4,4 @@ COPY . .
 RUN npm install
 RUN npm run build
 EXPOSE 5000
-CMD ["npm", "server"]
+CMD ["npm", "run", "server"]
