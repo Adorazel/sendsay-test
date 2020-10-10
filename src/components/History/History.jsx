@@ -27,21 +27,19 @@ const History = props => {
     historyRow.current.style.left = ""
   }
 
-  if (!historyItems.length) {
-    return <div className="history history--empty">
-      <div>
-        <strong>Enter</strong>&nbsp;— отправить запрос.
-        {" "}
-        <strong>{navigator.platform.match("Mac") ? "Meta" : "Ctrl"}+f</strong>&nbsp;— отформатировать запрос.
-      </div>
-    </div>
-  }
-
   return <div className="history">
     <div ref={historyScroll} className="history__scroll--horizontal" onTouchStart={doTouchStart}
          onWheel={doScroll.bind(this)}>
-      <div ref={historyRow} className="history__scroll-content">
-        {historyItems.map(item => <div key={item.id} className="history__item">
+      <div ref={historyRow} className={`history__scroll-content${!historyItems.length ? " history--empty" : ""}`}>
+        {
+          !historyItems.length && <div>
+            <strong>Enter</strong>&nbsp;— отправить запрос.
+            {" "}
+            <strong>{navigator.platform.match("Mac") ? "Meta" : "Ctrl"}+f</strong>&nbsp;— отформатировать запрос.
+          </div>
+        }
+        {
+          historyItems.map(item => <div key={item.id} className="history__item">
             <Dropdown className="ml-5" container={historyScroll.current}>
               <Dropdown.Toggle>
                 <span className={`request-dot request-dot-${item.isError ? "danger" : "success"}`}/>
@@ -58,8 +56,8 @@ const History = props => {
                 <Dropdown.Item variant="danger" onClick={() => deleteItem(item.id)}>Удалить</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-          </div>
-        )}
+          </div>)
+        }
       </div>
     </div>
     <div className="history__trash">

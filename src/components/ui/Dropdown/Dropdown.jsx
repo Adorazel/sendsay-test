@@ -40,6 +40,7 @@ export default class Dropdown extends Component {
           x = Math.min(right, r) - $menu.offsetWidth
           if (x < l + 15) x = left
           x = Math.max(x, l)
+          console.log(x)
         }
       }
       return {
