@@ -1,9 +1,4 @@
 @import "./_vars.css";
 @import "./_reset.css";
-/*@import "./_grid.css";*/
 @import "./_animations.css";
-
-
-/*@import "./_type.css";*/
 @import "./components/_console.css";
-@import "./components/_history.css";
