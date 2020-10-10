@@ -2,7 +2,7 @@ import React, {Component} from "react"
 import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
 import {withSendsay} from "../hoc"
-import {deleteHistoryItem, purgeHistory, setRequestBody, setResponseBody, send} from "../actions"
+import {deleteHistoryItem, purgeHistory, setHistory, setRequestBody, setResponseBody, send} from "../actions"
 import {compose, copyToClipboard} from "../utils"
 import {History} from "../components"
 
@@ -48,6 +48,18 @@ class HistoryContainer extends Component {
     purgeHistory()
   }
 
+  componentDidMount() {
+    try {
+      const history = localStorage.getItem("SENDSAY_HISTORY")
+      if (history) {
+        const {setHistory} = this.props
+        setHistory(JSON.parse(history))
+      }
+    } catch (e) {
+      process.env.NODE_ENV === "development" && console.log(e)
+    }
+  }
+
 
   render() {
     const {doItem, copyItem, deleteItem, cleanHistory} = this
@@ -64,6 +76,7 @@ const mapDispatchToProps = (dispatch, {sendsayService}) => bindActionCreators({
   send: send(sendsayService),
   deleteHistoryItem,
   purgeHistory,
+  setHistory,
   setRequestBody,
   setResponseBody
 }, dispatch)

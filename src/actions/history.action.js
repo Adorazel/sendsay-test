@@ -22,8 +22,16 @@ const purgeHistory = () => {
   }
 }
 
+const setHistory = history => {
+  return {
+    type: SET_HISTORY,
+    payload: history
+  }
+}
+
 export {
   addHistoryItem,
   deleteHistoryItem,
-  purgeHistory
+  purgeHistory,
+  setHistory
 }
