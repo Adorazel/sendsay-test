@@ -13,9 +13,9 @@ class LoginContainer extends Component {
     super(props)
 
     this.state = {
-      login: {value: "adorazel@gmail.com", isValid: true},
+      login: {value: "", isValid: true},
       sublogin: {value: "", isValid: true},
-      password: {value: "mi6Fieque", isValid: true},
+      password: {value: "", isValid: true},
       isFormValid: true
     }
   }
