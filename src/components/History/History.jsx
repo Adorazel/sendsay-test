@@ -33,7 +33,7 @@ const History = props => {
       <div ref={historyRow} className={`history__scroll-content${!historyItems.length ? " history--empty" : ""}`}>
         {
           !historyItems.length && <div>
-            <strong>Enter</strong>&nbsp;— отправить запрос.
+            <strong>{navigator.platform.match("Mac") ? "Meta" : "Ctrl"}+Enter</strong>&nbsp;— отправить запрос.
             {" "}
             <strong>{navigator.platform.match("Mac") ? "Meta" : "Ctrl"}+f</strong>&nbsp;— отформатировать запрос.
           </div>

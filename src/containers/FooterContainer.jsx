@@ -32,7 +32,7 @@ class FooterContainer extends Component {
   }
 
   keydownListener = event => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && (navigator.platform.match("Mac") ? event.metaKey : event.ctrlKey)) {
       event.preventDefault()
       this.doSend()
     }
