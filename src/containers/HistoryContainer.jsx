@@ -40,7 +40,11 @@ class HistoryContainer extends Component {
       const {historyItems} = this.props
       const {query} = historyItems.find(item => item.id === id)
       if (query && copyToClipboard(JSON.stringify(query, null, 2))) {
-        this.setState({copiedId: id})
+        this.setState({copiedId: id}, () => {
+          setTimeout(() => {
+            this.setState({copiedId: null})
+          }, 500)
+        })
       }
     })
 
