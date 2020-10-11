@@ -64,18 +64,28 @@ class LoginContainer extends Component {
   }
 
   loginHandler = () => {
-    const {signIn} = this.props
     const {login, sublogin, password, isFormValid} = this.state
-
     const isFormChanged = login.isChanged && password.isChanged
 
     if (!isFormChanged) {
-      this.setState({
-        isFormValid: false,
-        login: {isValid: false},
-        password: {isValid: false}
+      return this.setState(state => {
+        const {login, password} = state
+        return {
+          ...state,
+          isFormValid: false,
+          login: {
+            ...login,
+            isValid: login.isChanged && login.isValid
+          },
+          password: {
+            ...password,
+            isValid: password.isChanged && password.isValid
+          }
+        }
       })
     }
+
+    const {signIn} = this.props
 
     if (isFormChanged && isFormValid) signIn({
       login: login.value.trim(),
