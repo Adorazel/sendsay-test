@@ -4,7 +4,8 @@ const Button = forwardRef((props, ref) => {
 
   const {variant = "primary", loading, children, className, ...otherProps} = props
 
-  return <button type="button" ref={ref} className={`btn btn--${variant}${loading ? " btn--loading" : ""}${className ? ` ${className}` : ""}`} {...otherProps}>
+  return <button ref={ref} type="button"
+                 className={`btn btn--${variant}${loading ? " btn--loading" : ""}${className ? ` ${className}` : ""}`} {...otherProps}>
     {children}
   </button>
 })

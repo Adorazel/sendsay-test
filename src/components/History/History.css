@@ -11,8 +11,6 @@
     flex-shrink: 0;
 }
 
-
-
 .history__scroll--horizontal {
     padding-bottom: 100px;
     overflow-y: hidden;
@@ -32,7 +30,6 @@
     background: linear-gradient(to right, var(--gray-light), transparent);
     pointer-events: none;
     z-index: 2;
-
 }
 
 .history__trash {
@@ -51,7 +48,6 @@
     width: 1rem;
     background: linear-gradient(to left, var(--gray-light), transparent);
     pointer-events: none;
-
 }
 
 .history__trash .btn .icon {
@@ -63,6 +59,7 @@
     padding: var(--padding) .9375rem;
     position: relative;
     transition: left .3s ease-in-out;
+    height: calc(1.875rem + (var(--padding) * 2));
 }
 
 .history--empty {

@@ -28,7 +28,6 @@ export default class Dropdown extends Component {
       let x, y
       x = y = ""
       if (state.isOpened) {
-
         const $menu = this.menu.current
         const $trigger = this.trigger.current
         const {left, right, bottom} = $trigger.getBoundingClientRect()
@@ -40,7 +39,6 @@ export default class Dropdown extends Component {
           x = Math.min(right, r) - $menu.offsetWidth
           if (x < l + 15) x = left
           x = Math.max(x, l)
-          console.log(x)
         }
       }
       return {
@@ -63,16 +61,25 @@ export default class Dropdown extends Component {
   }
 
   close = event => {
+
+    if (!this.menu.current) return
+
     if (event.key === "Escape" || event.type === "click" || event.type === "closeAllDropdowns") {
-      this.setState(state => ({
-        ...state,
-        isOpened: false,
-      }), () => {
-        this.setPosition()
-        document.removeEventListener("click", this.close)
-        document.removeEventListener("keydown", this.close)
-        document.removeEventListener("closeAllDropdowns", this.close)
-      })
+      /* Проверка элемента истории "Удалить". Если это ОН,
+      то изменять состояние дропдауна не нужно, так как от просто удаляется из списка */
+      const isMenuItem = this.menu.current.contains(event.target)
+      if (!isMenuItem || (isMenuItem && event.target.dataset.type !== "delete")) {
+
+        this.setState(state => ({
+          ...state,
+          isOpened: false,
+        }), () => {
+          this.setPosition()
+          document.removeEventListener("click", this.close)
+          document.removeEventListener("keydown", this.close)
+          document.removeEventListener("closeAllDropdowns", this.close)
+        })
+      }
     }
   }
 
@@ -82,52 +89,63 @@ export default class Dropdown extends Component {
     window.addEventListener("resize", this.setPosition)
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const thisState = this.state
+    switch (true) {
+      case thisState.isOpened !== nextState.isOpened:
+        return true
+      case thisState.position.x !== nextState.position.x:
+        return true
+      case thisState.position.y !== nextState.position.y:
+        return true
+      default:
+        return false
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener("resize", this.setPosition)
   }
 
   render() {
-
     const {className, children, ...otherProps} = this.props
     const {state, toggle, trigger, menu} = this
+    return <div className={`dropdown${className ? ` ${className}` : ""}`} {...otherProps}>
+      {
+        Children.map(children, element => {
 
-    return <div
-      className={`dropdown${className ? ` ${className}` : ""}`} {...otherProps}>
-      {Children.map(children, element => {
+          if (!element.type) return element
 
-        if (!element.type) return element
+          let children = element.props.children
+          children = Array.isArray(children) ? [...children] : [children]
 
-        let children = element.props.children
-        children = Array.isArray(children) ? [...children] : [children]
-
-        switch (element.type.displayName) {
-          case "DropdownToggle":
-            return cloneElement(
-              element,
-              {
-                ...element.props,
-                ref: trigger,
-                toggle,
-                state
-              },
-              children
-            )
-
-          case "DropdownMenu":
-            return cloneElement(
-              element,
-              {
-                ...element.props,
-                ref: menu,
-                state
-              },
-              children
-            )
-
-          default:
-            return element
-        }
-      })}
+          switch (element.type.displayName) {
+            case "DropdownToggle":
+              return cloneElement(
+                element,
+                {
+                  ...element.props,
+                  ref: trigger,
+                  toggle,
+                  state
+                },
+                children
+              )
+            case "DropdownMenu":
+              return cloneElement(
+                element,
+                {
+                  ...element.props,
+                  ref: menu,
+                  state
+                },
+                children
+              )
+            default:
+              return element
+          }
+        })
+      }
     </div>
   }
 }

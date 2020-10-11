@@ -6,7 +6,6 @@ const Footer = props => {
 
   const {doSend, doFormat, isLoading} = props
 
-
   return <footer className="footer">
     <div className="footer__left">
       <Button onClick={doSend} loading={isLoading}>Отправить</Button>

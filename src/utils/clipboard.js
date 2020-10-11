@@ -1,4 +1,3 @@
-
 const fallbackCopyTextToClipboard = text => {
   const textArea = document.createElement("textarea")
   textArea.value = text

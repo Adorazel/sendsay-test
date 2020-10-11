@@ -6,12 +6,10 @@ import fetchReducer from "./fetch.reducer"
 import historyReducer from "./history.reducer"
 
 
-
 export default combineReducers({
   auth: authReducer,
   request: requestReducer,
   response: responseReducer,
   fetch: fetchReducer,
-  history: historyReducer,
-
+  history: historyReducer
 })

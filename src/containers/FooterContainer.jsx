@@ -46,6 +46,16 @@ class FooterContainer extends Component {
     document.addEventListener("keydown", this.keydownListener)
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const thisProps = this.props
+    switch (true) {
+      case thisProps.isLoading !== nextProps.isLoading:
+        return true
+      default:
+        return false
+    }
+  }
+
   componentWillUnmount() {
     document.removeEventListener("keydown", this.keydownListener)
   }

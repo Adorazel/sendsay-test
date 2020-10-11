@@ -1,13 +1,15 @@
 import React, {useEffect} from "react"
 import {connect} from "react-redux"
 import {BrowserRouter as Router, Redirect, Route, Switch} from "react-router-dom"
-import {LoginPage, ConsolePage} from "../pages"
-import withSendsay from "../hoc/withSendsay"
+import {withSendsay} from "../hoc"
 import {setAuth} from "../actions"
 import {compose} from "../utils"
+import {LoginPage, ConsolePage} from "../pages"
 
 
-const App = ({sendsayService, isAuth, setAuth}) => {
+const App = props => {
+
+  const {sendsayService, isAuth, setAuth} = props
 
   useEffect(() => {
     sendsayService.setSessionFromCookie("sendsay_session")

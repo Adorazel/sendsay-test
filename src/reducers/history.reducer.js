@@ -1,5 +1,7 @@
 import {ADD_HISTORY_ITEM, DELETE_HISTORY_ITEM, SET_HISTORY} from "../actionTypes"
 
+const HISTORY_MAX_LENGTH = 15
+
 const sorter = (a, b) => a.timestamp === b.timestamp ? 0 : a.timestamp < b.timestamp ? 1 : -1
 
 const saveHistory = history => {
@@ -30,7 +32,7 @@ const historyReducer = (state = initialState, action) => {
         history[index].timestamp = action.payload.timestamp
         history[index].isError = action.payload.isError
       }
-      history = history.sort(sorter).slice(0, 21)
+      history = history.sort(sorter).slice(0, HISTORY_MAX_LENGTH + 1)
       saveHistory(history)
       return {
         ...state,

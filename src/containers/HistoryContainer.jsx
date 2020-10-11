@@ -17,6 +17,14 @@ class HistoryContainer extends Component {
     }
   }
 
+  insertItem = id => {
+    const {historyItems, setRequestBody} = this.props
+    const {query} = historyItems.find(item => item.id === id)
+    if (query) {
+      setRequestBody(JSON.stringify(query, null, 2))
+    }
+  }
+
   doItem = id => {
     const {send, historyItems, setRequestBody, setResponseBody} = this.props
     const {query} = historyItems.find(item => item.id === id)
@@ -60,12 +68,24 @@ class HistoryContainer extends Component {
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const thisState = this.state
+    const thisProps = this.props
+    switch (true) {
+      case thisProps.historyItems !== nextProps.historyItems:
+        return true
+      case thisState.copiedId !== nextState.copiedId:
+        return true
+      default:
+        return false
+    }
+  }
 
   render() {
-    const {doItem, copyItem, deleteItem, cleanHistory} = this
+    const {insertItem, doItem, copyItem, deleteItem, cleanHistory} = this
     const {historyItems} = this.props
     const {copiedId} = this.state
-    const historyProps = {historyItems, doItem, copyItem, deleteItem, cleanHistory, copiedId}
+    const historyProps = {historyItems, copiedId, insertItem, doItem, copyItem, deleteItem, cleanHistory}
     return <History {...historyProps}/>
   }
 }

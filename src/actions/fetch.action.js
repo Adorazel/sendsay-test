@@ -6,12 +6,10 @@ const setLoading = () => SET_FETCH_LOADING
 
 const setFetchSuccess = () => SET_FETCH_ERROR
 
-const setFetchError = error => {
-  return {
-    type: SET_FETCH_ERROR,
-    payload: error
-  }
-}
+const setFetchError = error => ({
+  type: SET_FETCH_ERROR,
+  payload: error
+})
 
 const send = sendsay => ({query, options}) => dispatch => {
   dispatch(setLoading())
@@ -32,7 +30,8 @@ const send = sendsay => ({query, options}) => dispatch => {
     }
   }).catch(error => {
     /* При использовании метода onError ошибка отстается непойманой и выводится в консоль.
-       В библиотеке sendsay-api перепутан порядок методов then и catch */
+       В библиотеке sendsay-api перепутан порядок методов then и catch.
+       По этой причине я смользую catch вместо метода onError */
     dispatch(setFetchError(error))
     try {
       const body = JSON.stringify(error, null, 2)

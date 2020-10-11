@@ -1,33 +1,25 @@
 import {ADD_HISTORY_ITEM, DELETE_HISTORY_ITEM, SET_HISTORY} from "../actionTypes"
 
 
-const addHistoryItem = item => {
-  return {
-    type: ADD_HISTORY_ITEM,
-    payload: item
-  }
-}
+const addHistoryItem = item => ({
+  type: ADD_HISTORY_ITEM,
+  payload: item
+})
 
-const deleteHistoryItem = item => {
-  return {
-    type: DELETE_HISTORY_ITEM,
-    payload: item
-  }
-}
+const deleteHistoryItem = item => ({
+  type: DELETE_HISTORY_ITEM,
+  payload: item
+})
 
-const purgeHistory = () => {
-  return {
-    type: SET_HISTORY,
-    payload: []
-  }
-}
+const purgeHistory = () => ({
+  type: SET_HISTORY,
+  payload: []
+})
 
-const setHistory = history => {
-  return {
-    type: SET_HISTORY,
-    payload: history
-  }
-}
+const setHistory = history => ({
+  type: SET_HISTORY,
+  payload: history
+})
 
 export {
   addHistoryItem,

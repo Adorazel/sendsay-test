@@ -1,12 +1,12 @@
 import React from "react"
 import {Button, Alert} from "../ui"
+import {Copyright} from "../"
 import logo from "../../img/logo.png"
 import logo_2x from "../../img/logo@2x.png"
-import {Copyright} from "../"
 
 const Login = props => {
 
-  const {loginHandler, changeHandler, isLoading, alertProps, login, sublogin, password, isFormValid} = props
+  const {loginHandler, changeHandler, loginRef, isLoading, alertProps, login, sublogin, password, isFormValid} = props
 
   return <div className="login">
     <div className="login__logo">
@@ -17,7 +17,7 @@ const Login = props => {
       {alertProps && <Alert error={alertProps}/>}
       <div className={`login__form-group${login.isValid ? "" : " login__form-group--error"}`}>
         <label htmlFor="login">Логин</label>
-        <input type="text" id="login" name="login" className="login__form-control"
+        <input ref={loginRef} type="text" id="login" name="login" className="login__form-control"
                value={login.value} onChange={changeHandler} disabled={isLoading}/>
       </div>
       <div className="login__form-group">

@@ -1,14 +1,13 @@
+import "isomorphic-fetch"
 import React from "react"
 import ReactDOM from "react-dom"
+import * as serviceWorker from "./serviceWorker"
 import {Provider} from "react-redux"
-import "isomorphic-fetch"
-import {App, ErrorBoundary} from "./components"
 import {SendsayServiceProvider} from "./contexts"
 import {Sendsay} from "./services"
-import * as serviceWorker from "./serviceWorker"
 import store from "./store"
+import {App, ErrorBoundary} from "./components"
 import "./css/index.css"
-import "./utils"
 
 
 const sendsay = new Sendsay()

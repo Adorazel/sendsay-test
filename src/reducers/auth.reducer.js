@@ -21,6 +21,9 @@ const authReducer = (state = initialState, action) => {
 
     case SET_AUTH_USER:
       const {login, sublogin} = action.payload
+      /* При разработке я столкнулся с тем, что метод getUsername (как врочем и action pong)
+         возвращает не то значение, что я ожидал получить.
+         Поэтому я решил сохранять пользователя в localStorage */
       saveUser({login, sublogin})
       return {
         ...state,

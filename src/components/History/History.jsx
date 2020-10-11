@@ -4,7 +4,7 @@ import {Button, Dropdown} from "../ui"
 
 const History = props => {
 
-  const {historyItems, doItem, copyItem, deleteItem, cleanHistory, copiedId} = props
+  const {historyItems, copiedId, insertItem, doItem, copyItem, deleteItem, cleanHistory} = props
 
   const historyRow = useRef()
   const historyScroll = useRef()
@@ -41,7 +41,7 @@ const History = props => {
         {
           historyItems.map(item => <div key={item.id} className="history__item">
             <Dropdown className="ml-5" container={historyScroll.current}>
-              <Dropdown.Toggle>
+              <Dropdown.Toggle onClick={() => insertItem(item.id)}>
                 <span className={`request-dot request-dot-${item.isError ? "danger" : "success"}`}/>
                 {item.query["action"]}
                 <CSSTransition in={copiedId === item.id} timeout={500} classNames="history__item-copied"
@@ -53,7 +53,7 @@ const History = props => {
                 <Dropdown.Item onClick={() => doItem(item.id)}>Выполнить</Dropdown.Item>
                 <Dropdown.Item onClick={() => copyItem(item.id)}>Скопировать</Dropdown.Item>
                 <div className="dropdown-divider"/>
-                <Dropdown.Item variant="danger" onClick={() => deleteItem(item.id)}>Удалить</Dropdown.Item>
+                <Dropdown.Item variant="danger" data-type="delete" onClick={() => deleteItem(item.id)}>Удалить</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </div>)

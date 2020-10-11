@@ -41,8 +41,9 @@ class HeaderContainer extends Component {
   }
 
   componentDidMount() {
-    /* При разработке я столкнулся с тем, что метод getUsername возвращает не то значение, что я ожидал получить.
-       Поэтому я решил сохранять пользователя в localStorage */
+    /* При разработке я столкнулся с тем, что метод getUsername (как врочем и action pong)
+         возвращает не то значение, что я ожидал получить.
+         Поэтому я решил сохранять пользователя в localStorage */
     try {
       const user = localStorage.getItem("SENDSAY_USER")
       if (user) {
@@ -56,17 +57,32 @@ class HeaderContainer extends Component {
     document.addEventListener("keydown", this.keydownHandler)
   }
 
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
+    const thisState = this.state
+    const thisProps = this.props
+    switch (true) {
+      case thisProps.isLoading !== nextProps.isLoading:
+        return true
+      case thisProps.login !== nextProps.login:
+        return true
+      case thisProps.sublogin !== nextProps.sublogin:
+        return true
+      case thisState.isFullScreen !== nextState.isFullScreen:
+        return true
+      default:
+        return false
+    }
+  }
+
   componentWillUnmount() {
     document.removeEventListener("keydown", this.keydownHandler)
   }
 
   render() {
-
     const {logoutHandler, toggleFullScreen} = this
     const {isLoading, login, sublogin} = this.props
     const {isFullScreen} = this.state
     const headerProps = {login, sublogin, logoutHandler, isLoading, toggleFullScreen, isFullScreen}
-
     return <Header {...headerProps}/>
   }
 

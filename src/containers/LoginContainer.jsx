@@ -1,4 +1,4 @@
-import React, {Component} from "react"
+import React, {Component, createRef} from "react"
 import {bindActionCreators} from "redux"
 import {connect} from "react-redux"
 import {setAuthError, signIn} from "../actions"
@@ -13,11 +13,14 @@ class LoginContainer extends Component {
     super(props)
 
     this.state = {
-      login: {value: "", isValid: true},
-      sublogin: {value: "", isValid: true},
-      password: {value: "", isValid: true},
-      isFormValid: true
+      login: {value: "", isValid: true, isChanged: false},
+      sublogin: {value: "", isValid: true, isChanged: false},
+      password: {value: "", isValid: true, isChanged: false},
+      isFormValid: true,
+      isFormChanged: false
     }
+
+    this.loginRef = createRef()
   }
 
   clearError = () => {
@@ -29,25 +32,32 @@ class LoginContainer extends Component {
 
     this.clearError()
     const {name, value} = event.target
-    let isValid = true
+    let isValid = false
 
     this.setState(state => {
 
       let isFormValid = state.isFormValid
 
       if (name === "login") {
-        isValid = /^(?:[A-Z\d][A-Z\d_]{5,20}|[A-Z\d._%+-]+@[A-Z\d.-]+\.[A-Z]{2,6})$/i.test(value.trim())
+        /* Минимальная длина 3 символа, максимальная - 20 */
+        isValid = /^(?:[A-Z\d][A-Z\d_]{3,20}|[A-Z\d._%+-]+@[A-Z\d.-]+\.[A-Z]{2,6})$/i.test(value.trim())
         isFormValid = state.password.isValid && isValid
       }
 
       if (name === "password") {
+        /* Правила валидации соответствуют таковым при смене пароля на сайте */
+        /* Есть строчная буква
+           Есть цифра
+           Есть заглавная буква
+           Минимум 8 символов
+         */
         isValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[\s\da-zA-Z]{8,}$/.test(value.trim())
         isFormValid = state.login.isValid && isValid
       }
 
       return {
         ...state,
-        [name]: {value, isValid},
+        [name]: {value, isValid, isChanged: true},
         isFormValid
       }
     })
@@ -56,7 +66,18 @@ class LoginContainer extends Component {
   loginHandler = () => {
     const {signIn} = this.props
     const {login, sublogin, password, isFormValid} = this.state
-    if (isFormValid) signIn({
+
+    const isFormChanged = login.isChanged && password.isChanged
+
+    if (!isFormChanged) {
+      this.setState({
+        isFormValid: false,
+        login: {isValid: false},
+        password: {isValid: false}
+      })
+    }
+
+    if (isFormChanged && isFormValid) signIn({
       login: login.value.trim(),
       sublogin: sublogin.value.trim(),
       password: password.value.trim()
@@ -68,6 +89,7 @@ class LoginContainer extends Component {
   }
 
   componentDidMount() {
+    this.loginRef.current.focus()
     document.addEventListener("keydown", this.keydownHandler)
   }
 
@@ -75,16 +97,26 @@ class LoginContainer extends Component {
     const thisState = this.state
     const thisProps = this.props
     switch (true) {
-      case thisProps.error !== nextProps.error: return true
-      case thisProps.isLoading !== nextProps.isLoading: return true
-      case thisState.isFormValid !== nextState.isFormValid: return true
-      case thisState.login.value !== nextState.login.value: return true
-      case thisState.sublogin.value !== nextState.sublogin.value: return true
-      case thisState.password.value !== nextState.password.value: return true
-      case thisState.login.isValid !== nextState.login.isValid: return true
-      case thisState.sublogin.isValid !== nextState.sublogin.isValid: return true
-      case thisState.password.isValid !== nextState.password.isValid: return true
-      default: return false
+      case thisProps.error !== nextProps.error:
+        return true
+      case thisProps.isLoading !== nextProps.isLoading:
+        return true
+      case thisState.isFormValid !== nextState.isFormValid:
+        return true
+      case thisState.login.value !== nextState.login.value:
+        return true
+      case thisState.sublogin.value !== nextState.sublogin.value:
+        return true
+      case thisState.password.value !== nextState.password.value:
+        return true
+      case thisState.login.isValid !== nextState.login.isValid:
+        return true
+      case thisState.sublogin.isValid !== nextState.sublogin.isValid:
+        return true
+      case thisState.password.isValid !== nextState.password.isValid:
+        return true
+      default:
+        return false
     }
   }
 
@@ -99,9 +131,19 @@ class LoginContainer extends Component {
       message: error.explain === "wrong_credentials" && "Вход не вышел",
       description: JSON.stringify(error, ["id", "explain"], 1)
     }
-    const {loginHandler, changeHandler} = this
+    const {loginHandler, changeHandler, loginRef} = this
     const {login, sublogin, password, isFormValid} = this.state
-    const loginProps = {loginHandler, changeHandler, isLoading, alertProps, login, sublogin, password, isFormValid}
+    const loginProps = {
+      loginHandler,
+      changeHandler,
+      loginRef,
+      isLoading,
+      alertProps,
+      login,
+      sublogin,
+      password,
+      isFormValid
+    }
     return <Login {...loginProps}/>
   }
 }
